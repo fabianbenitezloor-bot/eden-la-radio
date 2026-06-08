@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#123326" />
+  <meta name="description" content="Edén La Radio - La fe viene por el oír. Escucha música cristiana en vivo." />
+  <title>Edén La Radio</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="splash" class="splash">
+    <div class="splash-logo">EDÉN</div>
+    <p>La fe viene por el oír</p>
+  </div>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <button id="menuBtn" class="icon-btn" aria-label="Abrir menú">☰</button>
+      <div>
+        <h1>Edén La Radio</h1>
+        <small>La fe viene por el oír</small>
+      </div>
+      <button id="shareBtn" class="icon-btn" aria-label="Compartir">↗</button>
+    </header>
+
+    <aside id="sideMenu" class="side-menu">
+      <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">×</button>
+      <h2>Menú</h2>
+      <a id="whatsappLink" href="https://wa.me/?text=Hola%20Ed%C3%A9n%20La%20Radio%2C%20quiero%20pedir%20una%20canci%C3%B3n" target="_blank" rel="noopener">📲 Pedir canción</a>
+      <a href="#" id="installBtn">⬇️ Instalar app</a>
+      <a href="mailto:info@edenlaradio.com">✉️ Contacto</a>
+    </aside>
+
+    <section class="hero-card">
+      <div class="dial-wrap">
+        <div class="glow"></div>
+        <div id="cover" class="cover">
+          <span>EDÉN</span>
+        </div>
+      </div>
+
+      <div class="now-playing">
+        <p class="status" id="status">PAUSADO</p>
+        <h2 id="songTitle">Toca play para escuchar</h2>
+        <p id="artistName">Edén La Radio en vivo</p>
+      </div>
+
+      <div class="visualizer" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="controls">
+        <button id="playBtn" class="round-btn play" aria-label="Reproducir o pausar">▶</button>
+      </div>
+
+      <label class="volume-row">
+        Volumen
+        <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" />
+      </label>
+    </section>
+
+    <section class="message-card">
+      <h3>Edén La Radio</h3>
+      <p>Una señal para acompañarte con música cristiana, palabra de fe y esperanza.</p>
+    </section>
+
+    <nav class="bottom-nav">
+      <button class="active">📻<span>Radio</span></button>
+      <button id="favBtn">❤️<span>Favorito</span></button>
+      <button id="requestBtn">💬<span>Pedir</span></button>
+      <button id="moreBtn">⋯<span>Más</span></button>
+    </nav>
+  </main>
+
+  <audio id="audio" preload="none"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
