@@ -3,89 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#08140f" />
   <title>Edén La Radio</title>
+  <meta name="theme-color" content="#1B248A" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="splash" class="splash">
-    <div class="splash-logo"><img src="assets/logo.svg" alt="Edén La Radio"></div>
-    <p>Conectando fe, música y esperanza...</p>
+    <img src="assets/logo.png" alt="Edén Radio" class="splash-logo" />
+    <p>La fe viene por el oír</p>
   </div>
 
-  <aside id="sideMenu" class="side-menu">
-    <button class="close" id="closeMenu">×</button>
-    <img class="menu-logo" src="assets/logo.svg" alt="Edén La Radio">
-    <h2>Edén La Radio</h2>
-    <button id="shareBtn">Compartir app</button>
-    <a href="https://wa.me/16785158994?text=Hola%20Ed%C3%A9n%20La%20Radio" target="_blank">Pedir canción por WhatsApp</a>
+  <aside id="menu" class="side-menu">
+    <button id="closeMenu" class="icon-btn">×</button>
+    <img src="assets/logo.png" alt="Edén Radio" class="menu-logo" />
+    <a href="#home">Inicio</a>
+    <a href="#verse">Versículo del día</a>
     <a href="#programacion">Programación</a>
-    <a href="#versiculo">Versículo del día</a>
+    <a href="https://wa.me/14047075013" target="_blank">Peticiones por WhatsApp</a>
+    <button id="shareBtn" class="menu-share">Compartir app</button>
   </aside>
-  <div id="overlay" class="overlay"></div>
 
-  <main class="app-shell">
+  <main id="home" class="app">
     <header class="topbar">
       <button id="openMenu" class="icon-btn">☰</button>
-      <div class="brand-mini"><img src="assets/logo.svg" alt=""><span>EDÉN</span></div>
-      <span class="live-dot">EN VIVO</span>
+      <span class="live-dot">● EN VIVO</span>
+      <button id="installBtn" class="install-btn" hidden>Instalar</button>
     </header>
 
     <section class="hero-card">
-      <div class="orbital">
-        <div class="ring ring-1"></div>
-        <div class="ring ring-2"></div>
-        <div class="center-logo"><img src="assets/logo.svg" alt="Edén La Radio"></div>
-      </div>
+      <img src="assets/logo.png" alt="Edén Radio" class="main-logo" />
       <h1>Edén La Radio</h1>
       <p class="tagline">La fe viene por el oír</p>
-      <div id="status" class="status">PAUSADO</div>
-    </section>
 
-    <section class="now-card">
-      <div class="cover"><img id="coverArt" src="assets/logo.svg" alt="Portada"></div>
-      <div>
-        <small>Ahora suena</small>
-        <h3 id="songTitle">Edén La Radio</h3>
-        <p id="artistName">Música cristiana en vivo</p>
+      <div class="visualizer" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
       </div>
+
+      <button id="playBtn" class="play-btn" aria-label="Reproducir">▶</button>
+      <p id="status" class="status">PAUSADO</p>
+      <p id="nowPlaying" class="now-playing">Música cristiana 24/7</p>
+      <audio id="radio" preload="none" crossorigin="anonymous"></audio>
     </section>
 
-    <section class="controls">
-      <button id="favBtn" class="round small">♡</button>
-      <button id="playBtn" class="round play">▶</button>
-      <button id="volumeBtn" class="round small">🔊</button>
+    <section id="verse" class="card verse-card">
+      <div class="section-kicker">📖 Palabra para hoy</div>
+      <h2>Versículo del Día</h2>
+      <blockquote id="verseText">Cargando versículo...</blockquote>
+      <p id="verseRef" class="verse-ref"></p>
+      <p id="reflection" class="reflection"></p>
     </section>
 
-    <div id="volumePanel" class="volume-panel">
-      <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.9">
-    </div>
-
-    <section class="visualizer" aria-label="Visualizador de audio">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </section>
-
-    <section id="versiculo" class="info-card">
-      <h2>Versículo del día</h2>
-      <p>“La fe viene por el oír, y el oír, por la palabra de Dios.”</p>
-      <strong>Romanos 10:17</strong>
-    </section>
-
-    <section id="programacion" class="info-card">
+    <section id="programacion" class="card schedule-card">
+      <div class="section-kicker">📅 Edén</div>
       <h2>Programación</h2>
-      <p>Pronto: música, devocionales, mensajes cortos y contenido de esperanza.</p>
+      <div class="schedule-item"><strong>Mañanas de Fe</strong><span>6:00 AM - 10:00 AM</span></div>
+      <div class="schedule-item"><strong>Alabanza Continua</strong><span>10:00 AM - 3:00 PM</span></div>
+      <div class="schedule-item"><strong>Palabra y Música</strong><span>3:00 PM - 8:00 PM</span></div>
+      <div class="schedule-item"><strong>Noches de Esperanza</strong><span>8:00 PM - 12:00 AM</span></div>
     </section>
 
     <nav class="bottom-nav">
-      <a class="active" href="#">Radio</a>
-      <a href="#versiculo">Fe</a>
-      <a href="#programacion">Programación</a>
-      <a id="whatsappBottom" href="https://wa.me/16785158994?text=Hola%20Ed%C3%A9n%20La%20Radio" target="_blank">WhatsApp</a>
+      <a href="#home">Inicio</a>
+      <a href="#verse">Palabra</a>
+      <a href="#programacion">Agenda</a>
+      <a href="https://wa.me/14047075013" target="_blank">WhatsApp</a>
     </nav>
   </main>
 
-  <audio id="audio" preload="none" crossorigin="anonymous"></audio>
   <script src="script.js"></script>
 </body>
 </html>

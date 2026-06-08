@@ -1,13 +1,10 @@
-# Edén La Radio
+# Edén La Radio V3
 
-App web/PWA para GitHub Pages.
+Web app/PWA para GitHub Pages con logo propio, colores corporativos y versículo del día automático.
 
-## Cambiar logo
-Reemplaza `assets/logo.svg` por tu logo. Si usas PNG, cambia las rutas en `index.html`, `manifest.json` y `script.js` si hace falta.
-
-## Stream
-El stream está en `script.js`:
-`https://radio.megahostec.com:8000/stream`
-
-## GitHub Pages
-Settings > Pages > Deploy from a branch > main > /(root)
+## Subir cambios
+1. En GitHub abre el repositorio `eden-la-radio`.
+2. Presiona **Add file** → **Upload files**.
+3. Sube todos estos archivos y carpetas.
+4. Acepta **Replace files** cuando GitHub pregunte.
+5. Presiona **Commit changes**.
