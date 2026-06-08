@@ -1,11 +1,1 @@
-{
-  "name": "Edén La Radio",
-  "short_name": "Edén Radio",
-  "description": "Edén La Radio - La fe viene por el oír",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#06130d",
-  "theme_color": "#123326",
-  "orientation": "portrait-primary",
-  "icons": []
-}
+{"name":"Edén La Radio","short_name":"Edén","start_url":"./","display":"standalone","background_color":"#07110d","theme_color":"#08140f","icons":[{"src":"assets/logo.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}

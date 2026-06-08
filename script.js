@@ -1,114 +1,78 @@
-const radio = {
-  name: "Edén La Radio",
-  subtitle: "La fe viene por el oír",
-  stream: "https://radio.megahostec.com:8000/stream",
-  metadataApi: "",
-  whatsapp: "https://wa.me/?text=Hola%20Ed%C3%A9n%20La%20Radio%2C%20quiero%20pedir%20una%20canci%C3%B3n"
+const STREAM_URL = "https://radio.megahostec.com:8000/stream";
+const METADATA_API = "https://radio.megahostec.com/api/nowplaying/eden_la_radio"; // cámbialo si tu ID de AzuraCast es otro
+
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('playBtn');
+const statusEl = document.getElementById('status');
+const favBtn = document.getElementById('favBtn');
+const volumeBtn = document.getElementById('volumeBtn');
+const volumePanel = document.getElementById('volumePanel');
+const volumeSlider = document.getElementById('volumeSlider');
+const titleEl = document.getElementById('songTitle');
+const artistEl = document.getElementById('artistName');
+const coverEl = document.getElementById('coverArt');
+
+audio.src = STREAM_URL;
+audio.volume = Number(localStorage.getItem('eden-volume') || .9);
+volumeSlider.value = audio.volume;
+favBtn.textContent = localStorage.getItem('eden-fav') === 'yes' ? '♥' : '♡';
+
+function setStatus(text){ statusEl.textContent = text; }
+function setPlayingUI(isPlaying){
+  document.body.classList.toggle('playing', isPlaying);
+  playBtn.textContent = isPlaying ? '❚❚' : '▶';
+  setStatus(isPlaying ? 'EN VIVO' : 'PAUSADO');
+}
+
+playBtn.addEventListener('click', async () => {
+  if(audio.paused){
+    try{ setStatus('CARGANDO'); await audio.play(); setPlayingUI(true); }
+    catch(e){ setStatus('TOCA OTRA VEZ'); }
+  } else { audio.pause(); setPlayingUI(false); }
+});
+
+audio.addEventListener('waiting', () => setStatus('CARGANDO'));
+audio.addEventListener('playing', () => setPlayingUI(true));
+audio.addEventListener('pause', () => setPlayingUI(false));
+audio.addEventListener('error', () => setStatus('SIN SEÑAL'));
+
+favBtn.addEventListener('click', () => {
+  const fav = localStorage.getItem('eden-fav') === 'yes';
+  localStorage.setItem('eden-fav', fav ? 'no' : 'yes');
+  favBtn.textContent = fav ? '♡' : '♥';
+});
+volumeBtn.addEventListener('click', () => volumePanel.classList.toggle('show'));
+volumeSlider.addEventListener('input', e => {
+  audio.volume = Number(e.target.value);
+  localStorage.setItem('eden-volume', audio.volume);
+});
+
+async function loadMetadata(){
+  try{
+    const res = await fetch(METADATA_API, {cache:'no-store'});
+    if(!res.ok) return;
+    const data = await res.json();
+    const song = data.now_playing?.song || {};
+    titleEl.textContent = song.title || 'Edén La Radio';
+    artistEl.textContent = song.artist || 'Música cristiana en vivo';
+    if(song.art) coverEl.src = song.art;
+  }catch(e){}
+}
+loadMetadata();
+setInterval(loadMetadata, 30000);
+
+const sideMenu = document.getElementById('sideMenu');
+const overlay = document.getElementById('overlay');
+document.getElementById('openMenu').onclick = () => { sideMenu.classList.add('open'); overlay.classList.add('show'); };
+document.getElementById('closeMenu').onclick = closeMenu;
+overlay.onclick = closeMenu;
+function closeMenu(){ sideMenu.classList.remove('open'); overlay.classList.remove('show'); }
+
+document.getElementById('shareBtn').onclick = async () => {
+  const shareData = {title:'Edén La Radio', text:'Escucha Edén La Radio', url:location.href};
+  if(navigator.share) await navigator.share(shareData);
+  else { await navigator.clipboard.writeText(location.href); alert('Enlace copiado'); }
 };
 
-const audio = document.getElementById("audio");
-const playBtn = document.getElementById("playBtn");
-const volume = document.getElementById("volume");
-const statusEl = document.getElementById("status");
-const songTitle = document.getElementById("songTitle");
-const artistName = document.getElementById("artistName");
-const sideMenu = document.getElementById("sideMenu");
-const menuBtn = document.getElementById("menuBtn");
-const closeMenu = document.getElementById("closeMenu");
-const moreBtn = document.getElementById("moreBtn");
-const requestBtn = document.getElementById("requestBtn");
-const favBtn = document.getElementById("favBtn");
-const shareBtn = document.getElementById("shareBtn");
-const installBtn = document.getElementById("installBtn");
-
-let deferredPrompt = null;
-audio.src = radio.stream;
-audio.volume = Number(volume.value);
-
-window.addEventListener("load", () => {
-  setTimeout(() => document.getElementById("splash").classList.add("hidden"), 1200);
-});
-
-async function playRadio() {
-  try {
-    statusEl.textContent = "CARGANDO";
-    await audio.play();
-    playBtn.textContent = "❚❚";
-    statusEl.textContent = "EN VIVO";
-    songTitle.textContent = radio.name;
-    artistName.textContent = radio.subtitle;
-    document.body.classList.add("playing");
-  } catch (error) {
-    statusEl.textContent = "SIN SEÑAL";
-    document.body.classList.remove("playing");
-    console.warn("No se pudo reproducir:", error);
-  }
-}
-
-function pauseRadio() {
-  audio.pause();
-  playBtn.textContent = "▶";
-  statusEl.textContent = "PAUSADO";
-  document.body.classList.remove("playing");
-}
-
-async function fetchMetadata() {
-  if (!radio.metadataApi) return;
-  try {
-    const response = await fetch(radio.metadataApi, { cache: "no-store" });
-    const data = await response.json();
-    const song = data?.now_playing?.song;
-    if (song) {
-      songTitle.textContent = song.title || radio.name;
-      artistName.textContent = song.artist || radio.subtitle;
-      if (song.art) {
-        document.getElementById("cover").innerHTML = `<img src="${song.art}" alt="Portada de ${song.title || radio.name}">`;
-      }
-    }
-  } catch (error) {
-    console.log("Metadata no disponible", error);
-  }
-}
-
-playBtn.addEventListener("click", () => audio.paused ? playRadio() : pauseRadio());
-volume.addEventListener("input", () => audio.volume = Number(volume.value));
-
-menuBtn.addEventListener("click", () => sideMenu.classList.add("open"));
-closeMenu.addEventListener("click", () => sideMenu.classList.remove("open"));
-moreBtn.addEventListener("click", () => sideMenu.classList.add("open"));
-requestBtn.addEventListener("click", () => window.open(radio.whatsapp, "_blank"));
-
-favBtn.addEventListener("click", () => {
-  localStorage.setItem("favoriteStation", "eden-la-radio");
-  alert("Edén La Radio guardada como favorita");
-});
-
-shareBtn.addEventListener("click", async () => {
-  const shareData = {
-    title: radio.name,
-    text: `Escucha ${radio.name} en vivo`,
-    url: location.href
-  };
-  if (navigator.share) await navigator.share(shareData);
-  else navigator.clipboard.writeText(location.href).then(() => alert("Link copiado"));
-});
-
-window.addEventListener("beforeinstallprompt", (event) => {
-  event.preventDefault();
-  deferredPrompt = event;
-});
-
-installBtn.addEventListener("click", async (event) => {
-  event.preventDefault();
-  if (!deferredPrompt) return alert("Abre esta web desde Chrome/Android para instalarla como app.");
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-});
-
-setInterval(fetchMetadata, 15000);
-fetchMetadata();
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js").catch(console.warn);
-}
+setTimeout(()=>document.getElementById('splash').classList.add('hide'), 1800);
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js').catch(()=>{}); }

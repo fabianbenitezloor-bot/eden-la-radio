@@ -1,16 +1,4 @@
-const CACHE_NAME = "eden-radio-v1";
-const APP_FILES = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json"
-];
-
-self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_FILES)));
-});
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(caches.match(event.request).then((response) => response || fetch(event.request)));
-});
+const CACHE='eden-radio-v2';
+const ASSETS=['./','index.html','style.css','script.js','manifest.json','assets/logo.svg'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
+self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));

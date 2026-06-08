@@ -1,34 +1,13 @@
 # Edén La Radio
 
-Web app/PWA para Edén La Radio.
+App web/PWA para GitHub Pages.
 
-## Cómo subir a GitHub Pages
+## Cambiar logo
+Reemplaza `assets/logo.svg` por tu logo. Si usas PNG, cambia las rutas en `index.html`, `manifest.json` y `script.js` si hace falta.
 
-1. Crea un repositorio nuevo en GitHub.
-2. Sube estos archivos en la raíz del repositorio:
-   - index.html
-   - style.css
-   - script.js
-   - manifest.json
-   - service-worker.js
-3. Ve a Settings > Pages.
-4. En Branch selecciona `main` y carpeta `/root`.
-5. Guarda y espera a que GitHub genere el enlace.
+## Stream
+El stream está en `script.js`:
+`https://radio.megahostec.com:8000/stream`
 
-## Stream actual
-
-https://radio.megahostec.com:8000/stream
-
-## Metadata
-
-En `script.js`, cambia esta línea cuando tengas la API exacta de AzuraCast:
-
-```js
-metadataApi: ""
-```
-
-Ejemplo:
-
-```js
-metadataApi: "https://radio.megahostec.com/api/nowplaying/eden_la_radio"
-```
+## GitHub Pages
+Settings > Pages > Deploy from a branch > main > /(root)
