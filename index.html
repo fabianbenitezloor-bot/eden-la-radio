@@ -4,6 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Edén La Radio</title>
+
+  <meta name="description" content="Edén La Radio: música cristiana, palabra de fe y esperanza las 24 horas." />
+
+  <!-- Vista previa al compartir en Facebook, WhatsApp y redes -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/" />
+  <meta property="og:title" content="Edén La Radio" />
+  <meta property="og:description" content="La fe viene por el oír. Música cristiana 24/7." />
+  <meta property="og:image" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/assets/share-card.png" />
+  <meta property="og:image:secure_url" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/assets/share-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Logo de Edén La Radio" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Edén La Radio" />
+  <meta name="twitter:description" content="La fe viene por el oír. Música cristiana 24/7." />
+  <meta name="twitter:image" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/assets/share-card.png" />
   <meta name="theme-color" content="#1B248A" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
@@ -42,7 +60,15 @@
 
       <button id="playBtn" class="play-btn" aria-label="Reproducir">▶</button>
       <p id="status" class="status">PAUSADO</p>
-      <p id="nowPlaying" class="now-playing">Música cristiana 24/7</p>
+      <div class="now-card" aria-live="polite">
+        <div class="album-art" id="albumArt">♪</div>
+        <div class="track-info">
+          <span class="track-label">Ahora sonando</span>
+          <h2 id="songTitle">Música cristiana 24/7</h2>
+          <p id="artistName">Edén La Radio</p>
+          <p id="nowPlaying" class="now-playing">Conectando con la señal...</p>
+        </div>
+      </div>
       <audio id="radio" preload="none" crossorigin="anonymous"></audio>
     </section>
 

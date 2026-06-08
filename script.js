@@ -3,6 +3,9 @@ const radio = document.getElementById("radio");
 const playBtn = document.getElementById("playBtn");
 const statusText = document.getElementById("status");
 const nowPlaying = document.getElementById("nowPlaying");
+const songTitle = document.getElementById("songTitle");
+const artistName = document.getElementById("artistName");
+const albumArt = document.getElementById("albumArt");
 const splash = document.getElementById("splash");
 const menu = document.getElementById("menu");
 const installBtn = document.getElementById("installBtn");
@@ -23,7 +26,8 @@ playBtn.addEventListener("click", async () => {
       playBtn.textContent = "❚❚";
       playBtn.classList.add("playing");
       statusText.textContent = "EN VIVO";
-      nowPlaying.textContent = "Estás escuchando Edén La Radio";
+      nowPlaying.textContent = "Señal en vivo";
+      updateMetadata();
     } catch (e) {
       statusText.textContent = "SIN SEÑAL";
       nowPlaying.textContent = "Toca play otra vez o revisa el stream.";
@@ -35,6 +39,101 @@ playBtn.addEventListener("click", async () => {
     statusText.textContent = "PAUSADO";
   }
 });
+
+
+// Metadata: canción y artista en vivo
+// Primero intenta leer el status de Icecast del puerto 8000.
+// También deja preparadas rutas comunes de AzuraCast por si tu estación tiene API nowplaying.
+const METADATA_URLS = [
+  "https://radio.megahostec.com:8000/status-json.xsl",
+  "https://radio.megahostec.com/api/nowplaying/eden_la_radio",
+  "https://radio.megahostec.com/api/nowplaying/eden",
+  "https://radio.megahostec.com/api/nowplaying/eden_radio"
+];
+
+let lastTrack = "";
+
+function cleanText(value, fallback = "") {
+  return String(value || fallback).replace(/\s+/g, " ").trim();
+}
+
+function splitTrack(rawTitle) {
+  const text = cleanText(rawTitle, "Música cristiana 24/7");
+  if (text.includes(" - ")) {
+    const [artist, ...titleParts] = text.split(" - ");
+    return { artist: cleanText(artist, "Edén La Radio"), title: cleanText(titleParts.join(" - "), text) };
+  }
+  if (text.includes(" – ")) {
+    const [artist, ...titleParts] = text.split(" – ");
+    return { artist: cleanText(artist, "Edén La Radio"), title: cleanText(titleParts.join(" – "), text) };
+  }
+  return { artist: "Edén La Radio", title: text };
+}
+
+function readIcecast(data) {
+  const source = data?.icestats?.source;
+  const current = Array.isArray(source) ? source[0] : source;
+  const raw = current?.title || current?.yp_currently_playing || current?.server_name;
+  if (!raw) return null;
+  return splitTrack(raw);
+}
+
+function readAzuraCast(data) {
+  const song = data?.now_playing?.song || data?.song_history?.[0]?.song;
+  if (!song) return null;
+  return {
+    artist: cleanText(song.artist, "Edén La Radio"),
+    title: cleanText(song.title, "Música cristiana 24/7"),
+    art: song.art || data?.station?.art || ""
+  };
+}
+
+function paintMetadata(track) {
+  const title = cleanText(track?.title, "Música cristiana 24/7");
+  const artist = cleanText(track?.artist, "Edén La Radio");
+  const key = `${artist} - ${title}`;
+
+  songTitle.textContent = title;
+  artistName.textContent = artist;
+  nowPlaying.textContent = "Señal en vivo";
+
+  if (track?.art && track.art.startsWith("http")) {
+    albumArt.innerHTML = `<img src="${track.art}" alt="Portada de ${title}">`;
+  } else {
+    albumArt.textContent = "♪";
+  }
+
+  if (key !== lastTrack) {
+    lastTrack = key;
+    document.title = `${title} - ${artist} | Edén La Radio`;
+  }
+}
+
+async function updateMetadata() {
+  for (const url of METADATA_URLS) {
+    try {
+      const response = await fetch(`${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) continue;
+      const data = await response.json();
+      const track = readAzuraCast(data) || readIcecast(data);
+      if (track?.title) {
+        paintMetadata(track);
+        return;
+      }
+    } catch (error) {
+      // Si una ruta falla por CORS o no existe, probamos la siguiente.
+    }
+  }
+
+  // Fallback si el servidor todavía no entrega metadata pública.
+  songTitle.textContent = "Música cristiana 24/7";
+  artistName.textContent = "Edén La Radio";
+  nowPlaying.textContent = radio.paused ? "Toca play para escuchar" : "Señal en vivo";
+  albumArt.textContent = "♪";
+}
+
+updateMetadata();
+setInterval(updateMetadata, 15000);
 
 const verses = [
   {t:"Busquen primeramente el reino de Dios y su justicia, y todas estas cosas les serán añadidas.",r:"Mateo 6:33",f:"Pon a Dios primero; lo demás encuentra su lugar."},
