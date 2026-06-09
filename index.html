@@ -103,13 +103,24 @@
     </main>
 
     <aside class="right-panel">
-      <div class="device-badge" id="deviceBadge">Web</div>
-      <div id="albumArt" class="album-art"><img src="assets/logo.png" alt="Edén"></div>
-      <p class="now-label" data-i18n="nowPlaying">Ahora en vivo</p>
-      <h2 id="artistName">Edén</h2>
-      <p id="songTitle">Música cristiana 24/7</p>
-      <button id="playBtn" class="play-btn" aria-label="Reproducir"><span>▶</span></button>
-      <p id="status" class="status" data-i18n="tapPlay">Toca play para escuchar</p>
+      <div class="desktop-verse-widget">
+        <div class="device-badge" data-i18n="verseOfDay">Versículo del día</div>
+        <p class="section-kicker" data-i18n="wordToday">📖 Palabra para hoy</p>
+        <blockquote id="sideVerseText">Cargando versículo...</blockquote>
+        <p id="sideVerseRef" class="verse-ref"></p>
+        <p id="sideReflection" class="reflection"></p>
+        <button class="primary" data-page="history" data-i18n="seePast">Ver versículos pasados</button>
+      </div>
+
+      <div class="mobile-player-widget">
+        <div class="device-badge" id="deviceBadge">App</div>
+        <div id="albumArt" class="album-art"><img src="assets/logo.png" alt="Edén"></div>
+        <p class="now-label" data-i18n="nowPlaying">Ahora en vivo</p>
+        <h2 id="artistName">Edén</h2>
+        <p id="songTitle">Música cristiana 24/7</p>
+        <button id="playBtn" class="play-btn" aria-label="Reproducir"><span>▶</span></button>
+        <p id="status" class="status" data-i18n="tapPlay">Toca play para escuchar</p>
+      </div>
       <audio id="radio" preload="none" playsinline></audio>
     </aside>
 

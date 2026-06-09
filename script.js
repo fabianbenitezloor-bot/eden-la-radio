@@ -15,7 +15,7 @@ const copy = {
 }[lang];
 document.documentElement.lang = lang;
 document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; if (copy[k]) el.textContent = copy[k]; });
-$("deviceBadge").textContent = isMobile ? "App" : "Web";
+if($("deviceBadge")) $("deviceBadge").textContent = isMobile ? "App" : "Web";
 window.addEventListener("load", () => setTimeout(() => $("splash")?.classList.add("hide"), 700));
 function setStatus(text){ if(statusEl) statusEl.textContent = text; }
 function setPlayingUI(isPlaying){
@@ -69,7 +69,7 @@ const verses = [
  {date:"Mar 15 2026",ref:"Salmos 56:3",text:"En el día que temo, yo en ti confío.",reflection:"La confianza en Dios es paz en medio del ruido."}
 ];
 const today = verses[Math.floor(Date.now()/86400000) % verses.length];
-function fillToday(v){ $("verseText").textContent = '“' + v.text + '”'; $("verseRef").textContent = v.ref; $("reflection").textContent = v.reflection; $("quickVerse").textContent = v.ref; }
+function fillToday(v){ $("verseText").textContent = '“' + v.text + '”'; $("verseRef").textContent = v.ref; $("reflection").textContent = v.reflection; $("quickVerse").textContent = v.ref; if($("sideVerseText")) $("sideVerseText").textContent = '“' + v.text + '”'; if($("sideVerseRef")) $("sideVerseRef").textContent = v.ref; if($("sideReflection")) $("sideReflection").textContent = v.reflection; }
 fillToday(today);
 const verseList = $("verseList"), verseDetail = $("verseDetail");
 function showVerse(i){ const v=verses[i]; verseDetail.innerHTML = `<h3>${v.date}</h3><blockquote>“${v.text}”</blockquote><p class="verse-ref">${v.ref}</p><p class="reflection">${v.reflection}</p>`; }
