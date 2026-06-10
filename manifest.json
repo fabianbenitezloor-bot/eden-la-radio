@@ -1,1 +1,13 @@
-{"name":"Edén La Radio","short_name":"Edén","start_url":"./","display":"standalone","background_color":"#191f6d","theme_color":"#191f6d","description":"Edén La Radio - La fe viene por el oír","icons":[{"src":"assets/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"assets/icon-512.png","sizes":"512x512","type":"image/png"}]}
+{
+  "name":"Edén Radio",
+  "short_name":"Edén",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#ef4774",
+  "theme_color":"#ef4774",
+  "description":"Plataforma cristiana online. La fe viene por el oír (Romanos 10:17).",
+  "icons":[
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png"}
+  ]
+}

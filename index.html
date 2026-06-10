@@ -3,148 +3,148 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Edén La Radio</title>
-  <meta name="description" content="Edén La Radio: música cristiana, palabra de fe y esperanza las 24 horas." />
+  <title>Edén Radio</title>
+  <meta name="description" content="Plataforma cristiana online. La fe viene por el oír (Romanos 10:17). Donde Dios habla al corazón. Adoración y esperanza 24/7." />
+  <link rel="canonical" href="https://fabianbenitezloor-bot.github.io/eden-la-radio/" />
+
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/" />
-  <meta property="og:title" content="Edén La Radio" />
-  <meta property="og:description" content="La fe viene por el oír. Música cristiana 24/7." />
+  <meta property="og:title" content="Edén Radio" />
+  <meta property="og:description" content="Plataforma cristiana online. “La fe viene por el oír” (Romanos 10:17). Donde Dios habla al corazón. Adoración y esperanza 24/7." />
   <meta property="og:image" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/assets/share-card.png" />
   <meta property="og:image:secure_url" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/assets/share-card.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Edén Radio - La fe viene por el oír" />
+
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#12175c" />
-  <link rel="icon" href="assets/icon-192.png" />
-  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <meta name="twitter:title" content="Edén Radio" />
+  <meta name="twitter:description" content="Plataforma cristiana online. La fe viene por el oír (Romanos 10:17)." />
+  <meta name="twitter:image" content="https://fabianbenitezloor-bot.github.io/eden-la-radio/assets/share-card.png" />
+
+  <meta name="theme-color" content="#ef4774" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="splash" class="splash"><img src="assets/logo.png" alt="Edén" /><span data-i18n="tagline">La fe viene por el oír</span></div>
-
-  <div class="desktop-layout" aria-label="Edén Radio Web">
-    <aside class="desktop-sidebar">
-      <img class="desktop-logo" src="assets/logo.png" alt="Edén" />
-      <button class="desk-link active" data-page="home"><span>⌂</span><b data-i18n="home">Inicio</b></button>
-      <button class="desk-link" data-page="verse"><span>📖</span><b data-i18n="word">Palabra</b></button>
-      <button class="desk-link" data-page="history"><span>📚</span><b data-i18n="pastVerses">Versículos pasados</b></button>
-      <button class="desk-link" data-page="donations"><span>🤍</span><b data-i18n="donations">Donaciones</b></button>
-      <button class="desk-link" data-page="shop"><span>🛍️</span><b data-i18n="shop">Tienda</b></button>
-      <button class="desk-link" data-page="social"><span>🌐</span><b data-i18n="social">Redes</b></button>
-      <button id="installBtn" class="install-btn" hidden data-i18n="install">Instalar</button>
-    </aside>
-
-    <main class="desktop-main">
-      <header class="desktop-topbar">
-        <div>
-          <p class="eyebrow"><i></i><span data-i18n="live">EN VIVO</span></p>
-          <h1 data-i18n="webHeadline">Música cristiana para tu día</h1>
-        </div>
-        <button id="shareBtn" class="share-pill" data-i18n="shareApp">Compartir app</button>
-      </header>
-
-      <section id="page-home" class="page active home-web">
-        <div class="hero-panel">
-          <img class="hero-logo" src="assets/logo.png" alt="Edén" />
-          <p class="tagline" data-i18n="tagline">La fe viene por el oír</p>
-          <div class="wave" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b></div>
-        </div>
-        <div class="quick-grid">
-          <button class="quick-card" data-page="verse"><strong data-i18n="verseOfDay">Versículo del día</strong><span id="quickVerse">Marcos 12:30</span></button>
-          <button class="quick-card" data-page="donations"><strong data-i18n="donations">Donaciones</strong><span data-i18n="supportText">Apoya este ministerio</span></button>
-          <button class="quick-card" data-page="shop"><strong data-i18n="shop">Tienda</strong><span data-i18n="soon">Próximamente</span></button>
-          <button class="quick-card" data-page="social"><strong data-i18n="social">Redes sociales</strong><span>@edenlaradio</span></button>
-        </div>
-      </section>
-
-      <section id="page-verse" class="page glass-card verse-card">
-        <p class="section-kicker" data-i18n="wordToday">📖 Palabra para hoy</p>
-        <h2 data-i18n="verseOfDay">Versículo del día</h2>
-        <blockquote id="verseText">Cargando versículo...</blockquote>
-        <p id="verseRef" class="verse-ref"></p>
-        <p id="reflection" class="reflection"></p>
-        <button class="primary" data-page="history" data-i18n="seePast">Ver versículos pasados</button>
-      </section>
-
-      <section id="page-history" class="page glass-card history-card">
-        <p class="section-kicker" data-i18n="library">📚 Biblioteca</p>
-        <h2 data-i18n="pastVerses">Versículos pasados</h2>
-        <div id="verseList" class="verse-list"></div>
-        <article id="verseDetail" class="verse-detail"></article>
-      </section>
-
-      <section id="page-donations" class="page glass-card">
-        <p class="section-kicker">🤍 Support</p>
-        <h2 data-i18n="donations">Donaciones</h2>
-        <p data-i18n="donationsText">Pronto podrás apoyar este ministerio. Puedes conectar Cash App, PayPal, Zelle o Stripe cuando tengas la cuenta lista.</p>
-        <div class="action-grid">
-          <a class="action disabled" href="#">Cash App</a><a class="action disabled" href="#">PayPal</a><a class="action disabled" href="#">Zelle</a>
-        </div>
-      </section>
-
-      <section id="page-shop" class="page glass-card">
-        <p class="section-kicker">🛍️ Edén Store</p>
-        <h2 data-i18n="shop">Tienda</h2>
-        <p data-i18n="shopText">Espacio reservado para camisetas, gorras y productos de Edén. Luego se puede conectar con Shopify, Square, PayPal o enlaces directos.</p>
-        <div class="product-card"><div class="shirt">EDÉN</div><div><strong>Camiseta Edén</strong><span data-i18n="soon">Próximamente</span></div></div>
-      </section>
-
-      <section id="page-social" class="page glass-card">
-        <p class="section-kicker">🌐 Community</p>
-        <h2 data-i18n="social">Redes sociales</h2>
-        <div class="action-grid social-grid">
-          <a class="action" href="https://wa.me/14047075013" target="_blank" rel="noopener">WhatsApp</a>
-          <a class="action" href="#" target="_blank" rel="noopener">Facebook</a>
-          <a class="action" href="#" target="_blank" rel="noopener">Instagram</a>
-          <button class="action" id="shareBtn2" data-i18n="share">Compartir</button>
-        </div>
-      </section>
-    </main>
-
-    <aside class="right-panel">
-      <div class="desktop-verse-widget">
-        <div class="device-badge" data-i18n="verseOfDay">Versículo del día</div>
-        <p class="section-kicker" data-i18n="wordToday">📖 Palabra para hoy</p>
-        <blockquote id="sideVerseText">Cargando versículo...</blockquote>
-        <p id="sideVerseRef" class="verse-ref"></p>
-        <p id="sideReflection" class="reflection"></p>
-        <button class="primary" data-page="history" data-i18n="seePast">Ver versículos pasados</button>
-      </div>
-
-      <div class="mobile-player-widget">
-        <div class="device-badge" id="deviceBadge">App</div>
-        <div id="albumArt" class="album-art"><img src="assets/logo.png" alt="Edén"></div>
-        <p class="now-label" data-i18n="nowPlaying">Ahora en vivo</p>
-        <h2 id="artistName">Edén</h2>
-        <p id="songTitle">Música cristiana 24/7</p>
-        <button id="playBtn" class="play-btn" aria-label="Reproducir"><span>▶</span></button>
-        <p id="status" class="status" data-i18n="tapPlay">Toca play para escuchar</p>
-      </div>
-      <audio id="radio" preload="none" playsinline></audio>
-    </aside>
-
-    <footer class="desktop-player">
-      <div class="mini-track"><img src="assets/logo.png" alt="Edén"><div><strong id="miniArtist">Edén</strong><span id="miniTitle">Música cristiana 24/7</span></div></div>
-      <button id="miniPlay" class="mini-play">▶</button>
-      <div class="mini-actions"><button id="shareBtn3">↗</button></div>
-    </footer>
-  </div>
-
-  <div class="mobile-shell" aria-label="Edén Radio App">
-    <header class="mobile-topbar">
-      <img src="assets/logo.png" alt="Edén" />
-      <span class="live-pill"><i></i><b data-i18n="live">EN VIVO</b></span>
-    </header>
-    <nav class="mobile-pages">
-      <button class="nav-btn active" data-page="home" data-i18n="home">Inicio</button>
-      <button class="nav-btn" data-page="verse" data-i18n="word">Palabra</button>
-      <button class="nav-btn" data-page="donations" data-i18n="donations">Donar</button>
-      <button class="nav-btn" data-page="shop" data-i18n="shop">Tienda</button>
-      <button class="nav-btn" data-page="social" data-i18n="social">Redes</button>
+  <aside class="desktop-side">
+    <img src="assets/logo.png" class="side-logo" alt="Edén Radio" />
+    <nav aria-label="Secciones">
+      <button class="nav active" data-page="home"><span>⌂</span><b data-i18n="home">Inicio</b></button>
+      <button class="nav" data-page="word"><span>☩</span><b data-i18n="word">Palabra</b></button>
+      <button class="nav" data-page="prayer"><span>🙏</span><b data-i18n="prayer">Oración</b></button>
+      <button class="nav" data-page="donate"><span>♡</span><b data-i18n="donate">Donar</b></button>
+      <button class="nav" data-page="shop"><span>◎</span><b data-i18n="shop">Tienda</b></button>
+      <button class="nav" data-page="social"><span>↗</span><b data-i18n="social">Redes</b></button>
     </nav>
-  </div>
+    <div class="social-mini" aria-label="Redes sociales">
+      <a href="https://www.instagram.com/edenlaradio/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+      <a href="https://www.facebook.com/profile.php?id=61590599195584" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+      <a href="https://wa.me/19144962393" target="_blank" rel="noopener" aria-label="WhatsApp">☏</a>
+      <button id="shareSide" aria-label="Compartir">↗</button>
+    </div>
+  </aside>
 
+  <main class="shell">
+    <header class="topbar">
+      <button id="menuBtn" class="ghost" aria-label="Menú">☰</button>
+      <img src="assets/logo.png" class="top-logo" alt="Edén Radio" />
+      <span class="live-dot" title="En vivo" aria-label="En vivo"></span>
+    </header>
+
+    <section id="home" class="page active hero-page">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <img src="assets/logo.png" class="hero-logo" alt="Edén Radio" />
+      <p class="slogan" data-i18n="slogan">LA FE VIENE POR EL OÍR</p>
+      <p class="verse-mini">Romanos 10:17</p>
+      <button id="shareTop" class="share-pill">↗ <span data-i18n="share">Compartir</span></button>
+      <div class="now-label" data-i18n="now">AHORA SONANDO</div>
+      <div class="spectrum" aria-hidden="true"></div>
+    </section>
+
+    <section id="word" class="page card-page">
+      <div class="card verse-card">
+        <span class="kicker">📖 <span data-i18n="verseTitle">Versículo del día</span></span>
+        <blockquote id="verseText"></blockquote>
+        <strong id="verseRef"></strong>
+        <p id="reflection"></p>
+        <button id="shareVerse" class="primary">↗ <span data-i18n="shareVerse">Compartir versículo</span></button>
+      </div>
+    </section>
+
+    <section id="prayer" class="page card-page">
+      <div class="card">
+        <span class="kicker">🙏 <span data-i18n="prayer">Oración</span></span>
+        <h1 data-i18n="needPrayer">Peticiones y oración</h1>
+        <p data-i18n="prayerText">Comparte tu petición por WhatsApp. En Edén Radio creemos que Dios habla al corazón.</p>
+        <a class="primary" href="https://wa.me/19144962393?text=Hola%20Ed%C3%A9n%20Radio%2C%20me%20gustar%C3%ADa%20compartir%20una%20petici%C3%B3n%20de%20oraci%C3%B3n%3A" target="_blank" rel="noopener">💬 <span data-i18n="sendPrayer">Enviar petición</span></a>
+      </div>
+    </section>
+
+    <section id="donate" class="page card-page">
+      <div class="card">
+        <span class="kicker">🎁 <span data-i18n="donate">Donar</span></span>
+        <h1 data-i18n="support">Apoya Edén Radio</h1>
+        <p data-i18n="supportText">Muy pronto podrás apoyar este ministerio con donaciones en línea.</p>
+        <button class="primary" disabled data-i18n="coming">Próximamente</button>
+      </div>
+    </section>
+
+    <section id="shop" class="page card-page">
+      <div class="card">
+        <span class="kicker">🛍️ <span data-i18n="shop">Tienda</span></span>
+        <h1 data-i18n="store">Tienda Edén</h1>
+        <p data-i18n="storeText">Camisetas y productos de Edén Radio estarán disponibles pronto.</p>
+        <button class="primary" disabled data-i18n="coming">Próximamente</button>
+      </div>
+    </section>
+
+    <section id="social" class="page card-page">
+      <div class="card social-card">
+        <span class="kicker">🌎 <span data-i18n="social">Redes</span></span>
+        <h1 data-i18n="follow">Síguenos</h1>
+        <div class="social-icons">
+          <a class="social-icon instagram" href="https://www.instagram.com/edenlaradio/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+          <a class="social-icon facebook" href="https://www.facebook.com/profile.php?id=61590599195584" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+          <a class="social-icon whatsapp" href="https://wa.me/19144962393" target="_blank" rel="noopener" aria-label="WhatsApp">☏</a>
+          <button id="shareSocial" class="social-icon share" aria-label="Compartir">↗</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="desktop-right">
+    <div class="card verse-card compact">
+      <span class="kicker">📖 <span data-i18n="verseTitle">Versículo del día</span></span>
+      <blockquote id="desktopVerseText"></blockquote>
+      <strong id="desktopVerseRef"></strong>
+      <p id="desktopReflection"></p>
+    </div>
+  </aside>
+
+  <footer class="player">
+    <div class="track">
+      <span class="tiny" data-i18n="now">AHORA SONANDO</span>
+      <strong id="artistName" class="marquee">Edén Radio</strong>
+      <span id="songTitle" class="marquee">Adoración y esperanza 24/7</span>
+    </div>
+    <button id="shareBtn" class="player-share" aria-label="Compartir">↗</button>
+    <button id="playBtn" class="play" aria-label="Reproducir">▶</button>
+  </footer>
+
+  <nav class="bottom-nav" aria-label="Navegación móvil">
+    <button class="nav active" data-page="home" aria-label="Inicio">⌂</button>
+    <button class="nav" data-page="word" aria-label="Palabra">☩</button>
+    <button class="nav" data-page="prayer" aria-label="Oración">🙏</button>
+    <button class="nav" data-page="donate" aria-label="Donar">♡</button>
+    <button class="nav" data-page="shop" aria-label="Tienda">◎</button>
+  </nav>
+
+  <audio id="radio" preload="none" playsinline crossorigin="anonymous"></audio>
   <script src="script.js"></script>
 </body>
 </html>

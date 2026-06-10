@@ -1,87 +1,106 @@
-const STREAM_URL = "https://radio.megahostec.com/listen/eden/stream";
-const NOW_PLAYING_URLS = [
-  "https://radio.megahostec.com/api/nowplaying/eden",
-  "https://radio.megahostec.com/api/nowplaying/1"
+const STREAM_URL='https://radio.megahostec.com/listen/eden/stream';
+const META_URL='https://radio.megahostec.com/api/nowplaying/eden';
+const SITE_URL='https://fabianbenitezloor-bot.github.io/eden-la-radio/';
+const SHARE_TEXT='Plataforma cristiana online. “La fe viene por el oír” (Romanos 10:17). Donde Dios habla al corazón. Adoración y esperanza 24/7.';
+
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const radio=$('#radio'), playBtn=$('#playBtn'), songTitle=$('#songTitle'), artistName=$('#artistName');
+radio.src=STREAM_URL;
+
+const verses=[
+ {ref:'Romanos 10:17', text:'Así que la fe es por el oír, y el oír, por la palabra de Dios.', reflection:'Hoy permite que la Palabra fortalezca tu fe.'},
+ {ref:'Marcos 12:30', text:'Y amarás al Señor tu Dios con todo tu corazón, y con toda tu alma, y con toda tu mente y con todas tus fuerzas.', reflection:'Dios desea todo tu corazón, no solo una parte.'},
+ {ref:'Salmos 56:3', text:'En el día que temo, yo en ti confío.', reflection:'La confianza en Dios es refugio en medio del temor.'},
+ {ref:'Mateo 6:33', text:'Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.', reflection:'Ordena tus prioridades: primero Dios.'},
+ {ref:'Filipenses 1:6', text:'El que comenzó en vosotros la buena obra, la perfeccionará hasta el día de Jesucristo.', reflection:'Dios no deja incompleto lo que empieza.'},
+ {ref:'Josué 1:9', text:'Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas.', reflection:'La valentía nace de saber que Dios va contigo.'}
 ];
-const $ = id => document.getElementById(id);
-const radio = $("radio"), playBtn = $("playBtn"), miniPlay = $("miniPlay"), statusEl = $("status");
-const songTitle = $("songTitle"), artistName = $("artistName"), albumArt = $("albumArt"), miniArtist = $("miniArtist"), miniTitle = $("miniTitle");
-let deferredPrompt;
-const lang = (navigator.language || "es").toLowerCase().startsWith("en") ? "en" : "es";
-const isMobile = matchMedia("(max-width: 899px)").matches;
-const copy = {
-  es:{tagline:"La fe viene por el oír",home:"Inicio",word:"Palabra",pastVerses:"Versículos pasados",donations:"Donaciones",shop:"Tienda",social:"Redes",shareApp:"Compartir app",live:"EN VIVO",install:"Instalar",tapPlay:"Toca play para escuchar",wordToday:"📖 Palabra para hoy",verseOfDay:"Versículo del día",seePast:"Ver versículos pasados",library:"📚 Biblioteca",donationsText:"Pronto podrás apoyar este ministerio. Puedes conectar Cash App, PayPal, Zelle o Stripe cuando tengas la cuenta lista.",shopText:"Espacio reservado para camisetas, gorras y productos de Edén. Luego se puede conectar con Shopify, Square, PayPal o enlaces directos.",soon:"Próximamente",share:"Compartir",paused:"PAUSADO",connecting:"Conectando...",onair:"EN VIVO",secondTap:"iPhone puede pedir una segunda pulsación para iniciar el audio.",unavailable:"Señal no disponible",webHeadline:"Música cristiana para tu día",supportText:"Apoya este ministerio",nowPlaying:"Ahora en vivo"},
-  en:{tagline:"Faith comes by hearing",home:"Home",word:"Word",pastVerses:"Past verses",donations:"Donations",shop:"Shop",social:"Social",shareApp:"Share app",live:"LIVE",install:"Install",tapPlay:"Tap play to listen",wordToday:"📖 Word for today",verseOfDay:"Verse of the day",seePast:"See past verses",library:"📚 Library",donationsText:"Soon you will be able to support this ministry. You can connect Cash App, PayPal, Zelle or Stripe when the account is ready.",shopText:"Reserved for Edén shirts, hats and products. Later it can connect to Shopify, Square, PayPal or direct links.",soon:"Coming soon",share:"Share",paused:"PAUSED",connecting:"Connecting...",onair:"LIVE",secondTap:"iPhone may ask you to tap play one more time to start audio.",unavailable:"Signal unavailable",webHeadline:"Christian music for your day",supportText:"Support this ministry",nowPlaying:"Now live"}
-}[lang];
-document.documentElement.lang = lang;
-document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; if (copy[k]) el.textContent = copy[k]; });
-if($("deviceBadge")) $("deviceBadge").textContent = isMobile ? "App" : "Web";
-window.addEventListener("load", () => setTimeout(() => $("splash")?.classList.add("hide"), 700));
-function setStatus(text){ if(statusEl) statusEl.textContent = text; }
-function setPlayingUI(isPlaying){
-  [playBtn, miniPlay].forEach(btn => { if(!btn) return; btn.classList.toggle("playing", isPlaying); btn.textContent = btn === miniPlay ? (isPlaying ? "❚❚" : "▶") : ""; });
-  if(playBtn) playBtn.innerHTML = `<span>${isPlaying ? "❚❚" : "▶"}</span>`;
-}
-async function togglePlay(){
-  try{
-    if(!radio.src){ radio.src = STREAM_URL + "?t=" + Date.now(); radio.load(); }
-    if(radio.paused){ setStatus(copy.connecting); await radio.play(); setPlayingUI(true); setStatus(copy.onair); }
-    else{ radio.pause(); setPlayingUI(false); setStatus(copy.paused); }
-  }catch(err){ setPlayingUI(false); setStatus(copy.tapPlay); if(songTitle) songTitle.textContent = copy.secondTap; if(miniTitle) miniTitle.textContent = copy.secondTap; }
-}
-playBtn?.addEventListener("click", togglePlay); miniPlay?.addEventListener("click", togglePlay);
-radio.addEventListener("playing", () => { setPlayingUI(true); setStatus(copy.onair); });
-radio.addEventListener("pause", () => { setPlayingUI(false); setStatus(copy.paused); });
-radio.addEventListener("waiting", () => setStatus(copy.connecting));
-radio.addEventListener("error", () => { setPlayingUI(false); setStatus(copy.unavailable); });
-function cleanMeta(artist,title){
-  artist = (artist || "").trim(); title = (title || "").trim();
-  artist = artist.replace(/^now on air:*/i,"").trim(); title = title.replace(/^now on air:*/i,"").trim();
-  if(title.includes(" - ") && (!artist || /now on air/i.test(artist))){ const p = title.split(" - "); artist = p.shift().trim(); title = p.join(" - ").trim(); }
-  if(title.includes(" — ") && (!artist || artist === "Edén")){ const p = title.split(" — "); title = p.shift().trim(); artist = p.join(" — ").trim(); }
-  return {artist: artist || "Edén", title: title || "Música cristiana 24/7"};
-}
-function setTrack(meta, art){
-  artistName.textContent = meta.artist; songTitle.textContent = meta.title; miniArtist.textContent = meta.artist; miniTitle.textContent = meta.title;
-  if(art && !/megahostec|azuracast|default|logo/i.test(art)){ albumArt.innerHTML = `<img src="${art}" alt="Album art">`; }
-  else{ albumArt.innerHTML = '<img src="assets/logo.png" alt="Edén">'; }
-}
-async function updateNowPlaying(){
-  for(const url of NOW_PLAYING_URLS){
-    try{
-      const res = await fetch(url,{cache:"no-store"}); if(!res.ok) continue;
-      const data = await res.json(); const np = data.now_playing || data; const song = np.song || {};
-      const meta = cleanMeta(song.artist || np.artist, song.title || np.title || np.text);
-      const art = song.art || song.custom_fields?.art || np.art;
-      setTrack(meta, art); return;
-    }catch(e){}
-  }
-  setTrack({artist:"Edén", title:"Música cristiana 24/7"}, "assets/logo.png");
-}
-updateNowPlaying(); setInterval(updateNowPlaying, 30000);
-const verses = [
- {date:"Mar 9 2026",ref:"Marcos 12:30",text:"Amarás al Señor tu Dios con todo tu corazón, y con toda tu alma, y con toda tu mente y con todas tus fuerzas.",reflection:"Que todo lo que hagas hoy nazca del amor a Dios."},
- {date:"Mar 10 2026",ref:"Romanos 10:17",text:"La fe viene por el oír, y el oír, por la palabra de Dios.",reflection:"Deja que la Palabra levante tu ánimo y dirija tu día."},
- {date:"Mar 11 2026",ref:"Mateo 6:33",text:"Mas buscad primeramente el reino de Dios y su justicia.",reflection:"Pon a Dios primero; lo demás encuentra su lugar."},
- {date:"Mar 12 2026",ref:"Filipenses 4:13",text:"Todo lo puedo en Cristo que me fortalece.",reflection:"Tu fuerza no nace del cansancio, nace de Cristo."},
- {date:"Mar 13 2026",ref:"Salmos 23:1",text:"Jehová es mi pastor; nada me faltará.",reflection:"Dios sabe cuidar lo que tú no puedes controlar."},
- {date:"Mar 14 2026",ref:"Josué 1:9",text:"Mira que te mando que te esfuerces y seas valiente.",reflection:"Avanza con fe. No caminas solo."},
- {date:"Mar 15 2026",ref:"Salmos 56:3",text:"En el día que temo, yo en ti confío.",reflection:"La confianza en Dios es paz en medio del ruido."}
-];
-const today = verses[Math.floor(Date.now()/86400000) % verses.length];
-function fillToday(v){ $("verseText").textContent = '“' + v.text + '”'; $("verseRef").textContent = v.ref; $("reflection").textContent = v.reflection; $("quickVerse").textContent = v.ref; if($("sideVerseText")) $("sideVerseText").textContent = '“' + v.text + '”'; if($("sideVerseRef")) $("sideVerseRef").textContent = v.ref; if($("sideReflection")) $("sideReflection").textContent = v.reflection; }
-fillToday(today);
-const verseList = $("verseList"), verseDetail = $("verseDetail");
-function showVerse(i){ const v=verses[i]; verseDetail.innerHTML = `<h3>${v.date}</h3><blockquote>“${v.text}”</blockquote><p class="verse-ref">${v.ref}</p><p class="reflection">${v.reflection}</p>`; }
-verses.forEach((v,i)=>{ const b=document.createElement("button"); b.className="verse-item"; b.innerHTML=`${v.date}<span>${v.ref}</span>`; b.onclick=()=>showVerse(i); verseList.appendChild(b); }); showVerse(0);
+const todayIndex=Math.floor(Date.now()/86400000)%verses.length;
+const v=verses[todayIndex];
+['#verseText','#desktopVerseText'].forEach(id=>{const el=$(id); if(el) el.textContent='“'+v.text+'”'});
+['#verseRef','#desktopVerseRef'].forEach(id=>{const el=$(id); if(el) el.textContent=v.ref});
+['#reflection','#desktopReflection'].forEach(id=>{const el=$(id); if(el) el.textContent=v.reflection});
+
+const lang=(navigator.language||'es').toLowerCase().startsWith('en')?'en':'es';
+const dict={
+ es:{home:'Inicio',word:'Palabra',prayer:'Oración',donate:'Donar',shop:'Tienda',social:'Redes',slogan:'LA FE VIENE POR EL OÍR',share:'Compartir',now:'AHORA SONANDO',verseTitle:'Versículo del día',shareVerse:'Compartir versículo',needPrayer:'Peticiones y oración',prayerText:'Comparte tu petición por WhatsApp. En Edén Radio creemos que Dios habla al corazón.',sendPrayer:'Enviar petición',support:'Apoya Edén Radio',supportText:'Muy pronto podrás apoyar este ministerio con donaciones en línea.',coming:'Próximamente',store:'Tienda Edén',storeText:'Camisetas y productos de Edén Radio estarán disponibles pronto.',follow:'Síguenos'},
+ en:{home:'Home',word:'Word',prayer:'Prayer',donate:'Donate',shop:'Shop',social:'Social',slogan:'FAITH COMES BY HEARING',share:'Share',now:'NOW PLAYING',verseTitle:'Verse of the day',shareVerse:'Share verse',needPrayer:'Prayer requests',prayerText:'Share your prayer request by WhatsApp. At Edén Radio we believe God speaks to the heart.',sendPrayer:'Send request',support:'Support Edén Radio',supportText:'Soon you will be able to support this ministry with online donations.',coming:'Coming soon',store:'Edén Store',storeText:'T-shirts and Edén Radio products will be available soon.',follow:'Follow us'}
+};
+document.documentElement.lang=lang;
+$$('[data-i18n]').forEach(el=>{el.textContent=dict[lang][el.dataset.i18n]||el.textContent});
+
 function go(page){
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  $("page-"+page)?.classList.add("active");
-  document.querySelectorAll(".nav-btn,.desk-link").forEach(b => b.classList.toggle("active", b.dataset.page === page));
+ $$('.page').forEach(p=>p.classList.toggle('active',p.id===page));
+ $$('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===page));
 }
-document.querySelectorAll("[data-page]").forEach(el => el.addEventListener("click", () => go(el.dataset.page)));
-async function shareApp(){ const shareData={title:"Edén La Radio",text:copy.tagline + ". Música cristiana 24/7.",url:location.href}; if(navigator.share){ await navigator.share(shareData); } else { await navigator.clipboard.writeText(location.href); alert(lang === "es" ? "Link copiado" : "Link copied"); } }
-["shareBtn","shareBtn2","shareBtn3"].forEach(id => $(id)?.addEventListener("click", shareApp));
-window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferredPrompt = e; if($("installBtn")) $("installBtn").hidden = false; });
-$("installBtn")?.addEventListener("click", async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; $("installBtn").hidden = true; });
-if("serviceWorker" in navigator){ window.addEventListener("load", () => navigator.serviceWorker.register("service-worker.js")); }
+$$('.nav').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));
+$('#menuBtn')?.addEventListener('click',()=>go('social'));
+
+playBtn.addEventListener('click', async()=>{
+ try{
+   if(radio.paused){
+     radio.src=STREAM_URL+(STREAM_URL.includes('?')?'&':'?')+'t='+Date.now();
+     await radio.play();
+     playBtn.textContent='Ⅱ';
+   } else {
+     radio.pause(); playBtn.textContent='▶';
+   }
+ }catch(e){ alert(lang==='en'?'Tap play again. On iPhone, audio must start with a user tap.':'Toca reproducir otra vez. En iPhone el audio debe iniciar con un toque.'); }
+});
+radio.addEventListener('playing',()=>playBtn.textContent='Ⅱ');
+radio.addEventListener('pause',()=>playBtn.textContent='▶');
+
+async function share(text=SHARE_TEXT){
+ const url=location.origin.includes('github.io')?SITE_URL:location.href;
+ const payload={title:'Edén Radio',text,url};
+ if(navigator.share){ try{ await navigator.share(payload); return; }catch(e){} }
+ window.open('https://wa.me/?text='+encodeURIComponent(text+' '+url),'_blank');
+}
+['#shareBtn','#shareTop','#shareSocial','#shareSide'].forEach(id=>$(id)?.addEventListener('click',()=>share()));
+$('#shareVerse')?.addEventListener('click',()=>share(v.text+' — '+v.ref));
+
+function makeSpectrum(){
+ const s=$('.spectrum'); if(!s) return;
+ for(let i=0;i<78;i++){
+  const b=document.createElement('span');
+  b.style.animationDelay=(i*0.035)+'s';
+  b.style.animationDuration=(.72+(i%9)*.055)+'s';
+  s.appendChild(b);
+ }
+}
+makeSpectrum();
+
+function parseTitle(data){
+ let song=data?.now_playing?.song;
+ let artist=song?.artist || '';
+ let title=song?.title || '';
+ let raw=song?.text || data?.now_playing?.song?.text || data?.live?.streamer_name || '';
+ if(!artist && !title && raw){
+  raw=String(raw).replace(/^Now On Air:\s*/i,'').replace(/\s+/g,' ').trim();
+  const parts=raw.split(/\s[-–—|/]\s/);
+  if(parts.length>=2){ artist=parts[0].trim(); title=parts.slice(1).join(' - ').trim(); }
+  else { title=raw; }
+ }
+ return {artist:artist||'Edén Radio', title:title||'Adoración y esperanza 24/7'};
+}
+function updateMarquee(){
+ $$('.marquee').forEach(el=>{
+  el.classList.remove('scroll');
+  requestAnimationFrame(()=>{ if(el.scrollWidth > el.clientWidth + 10) el.classList.add('scroll'); });
+ });
+}
+async function updateMeta(){
+ try{
+  const res=await fetch(META_URL,{cache:'no-store'});
+  if(!res.ok) throw new Error('no meta');
+  const data=await res.json();
+  const meta=parseTitle(data);
+  artistName.textContent=meta.artist;
+  songTitle.textContent=meta.title;
+  updateMarquee();
+ }catch(e){ updateMarquee(); }
+}
+updateMeta(); setInterval(updateMeta,25000); window.addEventListener('resize',updateMarquee);
+
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));

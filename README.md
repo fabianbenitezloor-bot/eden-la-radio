@@ -1,10 +1,12 @@
-# Edén La Radio V7
+# Edén Radio V9
 
-Versión visual inspirada en una app tipo Radio Station: en teléfono se ve como app, con header magenta, pantalla principal full visual y reproductor siempre visible abajo. En desktop conserva vista web con panel derecho para el versículo del día.
+Versión lista para GitHub Pages.
 
 ## Subir a GitHub
-1. Descomprime este ZIP.
-2. En tu repo `eden-la-radio`, presiona **Add file → Upload files**.
-3. Sube todos los archivos y la carpeta `assets`.
-4. Acepta reemplazar archivos.
+1. Abre tu repositorio `eden-la-radio`.
+2. Presiona **Add file** → **Upload files**.
+3. Sube todo el contenido de esta carpeta.
+4. Acepta reemplazar archivos existentes.
 5. Presiona **Commit changes**.
+
+Incluye metadata para compartir, logo transparente, imagen social 1200x630, vista móvil tipo app, vista desktop tipo Spotify Web y reproductor fijo.
