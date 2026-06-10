@@ -34,12 +34,12 @@
   <aside class="desktop-side">
     <img src="assets/logo.png" class="side-logo" alt="Edén Radio" />
     <nav aria-label="Secciones">
-      <button class="nav active" data-page="home"><span>⌂</span><b data-i18n="home">Inicio</b></button>
-      <button class="nav" data-page="word"><span>☩</span><b data-i18n="word">Palabra</b></button>
+      <button class="nav active" data-page="home"><span>🏠</span><b data-i18n="home">Inicio</b></button>
+      <button class="nav" data-page="word"><span>📖</span><b data-i18n="word">Palabra</b></button>
       <button class="nav" data-page="prayer"><span>🙏</span><b data-i18n="prayer">Oración</b></button>
-      <button class="nav" data-page="donate"><span>♡</span><b data-i18n="donate">Donar</b></button>
-      <button class="nav" data-page="shop"><span>◎</span><b data-i18n="shop">Tienda</b></button>
-      <button class="nav" data-page="social"><span>↗</span><b data-i18n="social">Redes</b></button>
+      <button class="nav" data-page="support"><span>❤️</span><b data-i18n="supportNav">Apóyanos</b></button>
+      <button class="nav" data-page="shop"><span>🛍️</span><b data-i18n="shop">Tienda</b></button>
+      <button class="nav" data-page="social"><span>🌎</span><b data-i18n="social">Redes</b></button>
     </nav>
     <div class="social-mini" aria-label="Redes sociales">
       <a href="https://www.instagram.com/edenlaradio/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
@@ -58,21 +58,32 @@
 
     <section id="home" class="page active hero-page">
       <div class="hero-bg" aria-hidden="true"></div>
-      <img src="assets/logo.png" class="hero-logo" alt="Edén Radio" />
-      <p class="slogan" data-i18n="slogan">LA FE VIENE POR EL OÍR</p>
-      <p class="verse-mini">Romanos 10:17</p>
-      <button id="shareTop" class="share-pill">↗ <span data-i18n="share">Compartir</span></button>
-      <div class="now-label" data-i18n="now">AHORA SONANDO</div>
+
+      <article class="daily-word home-card">
+        <span class="kicker">📖 <span data-i18n="verseTitle">Palabra del día</span></span>
+        <blockquote id="homeVerseText"></blockquote>
+        <strong id="homeVerseRef"></strong>
+        <button id="shareHomeVerse" class="share-word">↗ <span data-i18n="shareVerse">Compartir Palabra</span></button>
+      </article>
+
+      <article class="onair home-card">
+        <span class="kicker">📻 <span data-i18n="onAir">Al aire ahora</span></span>
+        <h2 id="programName">ADORACIÓN Y ESPERANZA</h2>
+        <p><span data-i18n="host">Conduce</span>: <strong id="programHost">Emma Maldonado</strong></p>
+        <small id="programTime">10:00 AM - 1:00 PM</small>
+      </article>
+
+      <div class="now-label" data-i18n="playing">SONANDO</div>
       <div class="spectrum" aria-hidden="true"></div>
     </section>
 
     <section id="word" class="page card-page">
       <div class="card verse-card">
-        <span class="kicker">📖 <span data-i18n="verseTitle">Versículo del día</span></span>
+        <span class="kicker">📖 <span data-i18n="verseTitle">Palabra del día</span></span>
         <blockquote id="verseText"></blockquote>
         <strong id="verseRef"></strong>
         <p id="reflection"></p>
-        <button id="shareVerse" class="primary">↗ <span data-i18n="shareVerse">Compartir versículo</span></button>
+        <button id="shareVerse" class="primary">↗ <span data-i18n="shareVerse">Compartir Palabra</span></button>
       </div>
     </section>
 
@@ -81,16 +92,18 @@
         <span class="kicker">🙏 <span data-i18n="prayer">Oración</span></span>
         <h1 data-i18n="needPrayer">Peticiones y oración</h1>
         <p data-i18n="prayerText">Comparte tu petición por WhatsApp. En Edén Radio creemos que Dios habla al corazón.</p>
-        <a class="primary" href="https://wa.me/19144962393?text=Hola%20Ed%C3%A9n%20Radio%2C%20me%20gustar%C3%ADa%20compartir%20una%20petici%C3%B3n%20de%20oraci%C3%B3n%3A" target="_blank" rel="noopener">💬 <span data-i18n="sendPrayer">Enviar petición</span></a>
+        <a class="primary" href="https://wa.me/19144962393?text=Hola%20Ed%C3%A9n%20Radio%2C%20me%20gustar%C3%ADa%20compartir%20una%20petici%C3%B3n%20de%20oraci%C3%B3n%3A" target="_blank" rel="noopener">🙏 <span data-i18n="sendPrayer">Necesito oración</span></a>
+        <a class="primary secondary" href="https://wa.me/19144962393?text=Hola%20Ed%C3%A9n%20Radio%2C%20me%20gustar%C3%ADa%20compartir%20un%20testimonio%3A" target="_blank" rel="noopener">✨ <span data-i18n="sendTestimony">Compartir testimonio</span></a>
       </div>
     </section>
 
-    <section id="donate" class="page card-page">
+    <section id="support" class="page card-page">
       <div class="card">
-        <span class="kicker">🎁 <span data-i18n="donate">Donar</span></span>
-        <h1 data-i18n="support">Apoya Edén Radio</h1>
-        <p data-i18n="supportText">Muy pronto podrás apoyar este ministerio con donaciones en línea.</p>
-        <button class="primary" disabled data-i18n="coming">Próximamente</button>
+        <span class="kicker">❤️ <span data-i18n="supportNav">Apóyanos</span></span>
+        <h1 data-i18n="supportTitle">Apoya Edén Radio</h1>
+        <p data-i18n="supportText">Tu apoyo nos ayuda a seguir llevando esperanza, adoración y la Palabra de Dios a más personas cada día.</p>
+        <a class="primary" href="https://paypal.me/FEMediaGroupGA?country.x=US&locale.x=es_XC" target="_blank" rel="noopener">❤️ <span data-i18n="paypal">Donar con PayPal</span></a>
+        <p class="mini-copy">“La fe viene por el oír” · Romanos 10:17</p>
       </div>
     </section>
 
@@ -119,16 +132,17 @@
 
   <aside class="desktop-right">
     <div class="card verse-card compact">
-      <span class="kicker">📖 <span data-i18n="verseTitle">Versículo del día</span></span>
+      <span class="kicker">📖 <span data-i18n="verseTitle">Palabra del día</span></span>
       <blockquote id="desktopVerseText"></blockquote>
       <strong id="desktopVerseRef"></strong>
       <p id="desktopReflection"></p>
+      <button id="desktopShareVerse" class="primary small">↗ <span data-i18n="shareVerse">Compartir Palabra</span></button>
     </div>
   </aside>
 
   <footer class="player">
     <div class="track">
-      <span class="tiny" data-i18n="now">AHORA SONANDO</span>
+      <span class="tiny" data-i18n="playing">SONANDO</span>
       <strong id="artistName" class="marquee">Edén Radio</strong>
       <span id="songTitle" class="marquee">Adoración y esperanza 24/7</span>
     </div>
@@ -137,11 +151,11 @@
   </footer>
 
   <nav class="bottom-nav" aria-label="Navegación móvil">
-    <button class="nav active" data-page="home" aria-label="Inicio">⌂</button>
-    <button class="nav" data-page="word" aria-label="Palabra">☩</button>
-    <button class="nav" data-page="prayer" aria-label="Oración">🙏</button>
-    <button class="nav" data-page="donate" aria-label="Donar">♡</button>
-    <button class="nav" data-page="shop" aria-label="Tienda">◎</button>
+    <button class="nav active" data-page="home"><span>🏠</span><b data-i18n="home">Inicio</b></button>
+    <button class="nav" data-page="word"><span>📖</span><b data-i18n="word">Palabra</b></button>
+    <button class="nav" data-page="prayer"><span>🙏</span><b data-i18n="prayer">Oración</b></button>
+    <button class="nav" data-page="support"><span>❤️</span><b data-i18n="supportNav">Apóyanos</b></button>
+    <button class="nav" data-page="shop"><span>🛍️</span><b data-i18n="shop">Tienda</b></button>
   </nav>
 
   <audio id="radio" preload="none" playsinline crossorigin="anonymous"></audio>
