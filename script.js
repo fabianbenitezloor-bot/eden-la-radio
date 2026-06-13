@@ -105,16 +105,6 @@ async function shareVerseImage(){
 }
 ['#shareVerse','#shareHomeVerse','#desktopShareVerse'].forEach(id=>$(id)?.addEventListener('click',shareVerseImage));
 
-function makeSpectrum(){
- const s=$('.spectrum'); if(!s) return;
- for(let i=0;i<82;i++){
-  const b=document.createElement('span');
-  b.style.animationDelay=(i*0.033)+'s';
-  b.style.animationDuration=(.72+(i%9)*.055)+'s';
-  s.appendChild(b);
- }
-}
-makeSpectrum();
 
 function minutes(t){const [h,m]=t.split(':').map(Number); return h*60+m;}
 function fmt(t){let [h,m]=t.split(':').map(Number); const ap=h>=12?'PM':'AM'; h=h%12||12; return `${h}:${String(m).padStart(2,'0')} ${ap}`;}
